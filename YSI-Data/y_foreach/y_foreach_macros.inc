@@ -165,6 +165,25 @@ P:D(Iterator@Reverse(Iterator:iter<>));
 
 /*
 
+// Modify a loop, while protecting the removal code.
+foreach (new i : Vehicle)
+{
+	REMOVE__(Vehicle, i)
+	{
+		// `i` is the same here.
+		DestroyVehicle(i);
+	}
+	// `i` is changed here.
+}
+
+*/
+
+#define REMOVE__(%0,%1) for (new _yF@%1, _Fy@%1 = 1; _Fy@%1 && Iter_SafeRemove(%0, %1, _yF@%1) != INVALID_ITERATOR_SLOT; _Fy@%1 = 0, %1 = _yF@%1)
+#define _yF@%0\32; _yF@
+#define _Fy@%0\32; _Fy@
+
+/*
+
     88b           d88            88                       db        88888888ba  88  
     888b         d888            ""                      d88b       88      "8b 88  
     88`8b       d8'88                                   d8'`8b      88      ,8P 88  
